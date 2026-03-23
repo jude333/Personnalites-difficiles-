@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide — Personnalités Difficiles v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f0f14;
+  --surface: #17171f;
+  --surface2: #1e1e28;
+  --border: rgba(255,255,255,0.07);
+  --border-strong: rgba(255,255,255,0.15);
+  --text: #e8e4dc;
+  --text-muted: #7a7a8c;
+  --text-soft: #b0adb8;
+  --accent: #d4845a;
+  --accent2: #7eb8a4;
+  --accent3: #c4a882;
+  --danger: #c05a5a;
+  --gold: #c4a53a;
+  --tsa: #8ab4c4;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Epilogue', sans-serif;
+  font-weight: 300;
+  line-height: 1.75;
+  min-height: 100vh;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+/* LAYOUT */
+.page { max-width: 900px; margin: 0 auto; padding: 0 28px 120px; }
+
+/* NAV SIDEBAR */
+.nav-pill {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
+}
+
+.nav-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--border-strong);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  position: relative;
+}
+
+.nav-dot:hover, .nav-dot.active {
+  background: var(--accent);
+  width: 8px; height: 24px;
+  border-radius: 4px;
+}
+
+.nav-dot::after {
+  content: attr(data-label);
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  font-family: 'Epilogue', sans-serif;
+}
+
+.nav-dot:hover::after { opacity: 1; }
+
+@media (max-width: 700px) { .nav-pill { display: none; } }
+
+/* HEADER */
+.hero {
+  padding: 80px 0 60px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 70px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -80px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(212,132,90,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero-sub {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 560px;
+  line-height: 1.7;
+}
+
+/* TSA BANNER */
+.tsa-banner {
+  background: linear-gradient(135deg, rgba(138,180,196,0.08), rgba(138,180,196,0.03));
+  border: 1px solid rgba(138,180,196,0.25);
+  border-left: 3px solid var(--tsa);
+  padding: 22px 28px;
+  margin-bottom: 70px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.tsa-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+
+.tsa-banner h3 {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--tsa);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.tsa-banner p {
+  font-size: 0.88rem;
+  color: var(--text-soft);
+  line-height: 1.65;
+}
+
+/* SECTION */
+.section { margin-bottom: 80px; scroll-margin-top: 40px; }
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 8px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.s-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.s-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.s-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  padding-left: 0;
+  line-height: 1.6;
+}
+
+/* PROFILE TABS */
+.profile-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.profile-tabs::-webkit-scrollbar { display: none; }
+
+.ptab {
+  padding: 12px 20px;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  transition: all 0.2s;
+  font-family: 'Epilogue', sans-serif;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.ptab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.ptab:hover:not(.active) { color: var(--text-soft); }
+
+.profile-panel { display: none; }
+.profile-panel.active { display: block; animation: fadeIn 0.25s ease; }
+
+@keyframes fadeIn { from { opacity:0; transform: translateY(6px); } to { opacity:1; transform: translateY(0); } }
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 600px) { .profile-grid { grid-template-columns: 1fr; } }
+
+.pblock {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 20px 22px;
+}
+
+.pblock-title {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.pblock ul { list-style: none; padding: 0; }
+
+.pblock ul li {
+  font-size: 0.87rem;
+  padding: 5px 0;
+  padding-left: 16px;
+  position: relative;
+  color: var(--text-soft);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.pblock ul li:last-child { border-bottom: none; }
+.pblock ul li::before { content: '—'; position: absolute; left: 0; color: var(--text-muted); font-size: 0.8rem; }
+
+.pblock.danger { border-color: rgba(192,90,90,0.25); }
+.pblock.danger .pblock-title { color: var(--danger); }
+
+.pblock.good { border-color: rgba(126,184,164,0.2); }
+.pblock.good .pblock-title { color: var(--accent2); }
+
+/* TSA NOTE dans profiles */
+.tsa-note {
+  background: rgba(138,180,196,0.06);
+  border: 1px solid rgba(138,180,196,0.15);
+  border-left: 2px solid var(--tsa);
+  padding: 14px 18px;
+  margin-top: 6px;
+  font-size: 0.84rem;
+  color: var(--text-soft);
+  display: flex;
+  gap: 10px;
+}
+
+.tsa-note-icon { color: var(--tsa); flex-shrink: 0; font-size: 0.9rem; }
+
+/* SCRIPTS */
+.scripts-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.filter-btn {
+  padding: 6px 14px;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  transition: all 0.2s;
+  font-family: 'Epilogue', sans-serif;
+}
+
+.filter-btn.active, .filter-btn:hover {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.script-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  margin-bottom: 14px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.script-item:hover { border-color: var(--border-strong); }
+
+.script-item[data-tag] { display: block; }
+.script-item.hidden { display: none; }
+
+.script-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  cursor: pointer;
+  gap: 12px;
+}
+
+.script-top-left { display: flex; align-items: center; gap: 12px; }
+
+.script-tag {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  font-weight: 600;
+  font-family: 'Epilogue', sans-serif;
+}
+
+.tag-cadrage { background: rgba(212,132,90,0.15); color: var(--accent); }
+.tag-recadrage { background: rgba(192,90,90,0.15); color: var(--danger); }
+.tag-juridique { background: rgba(196,165,58,0.15); color: var(--gold); }
+.tag-ecrit { background: rgba(126,184,164,0.15); color: var(--accent2); }
+.tag-cloture { background: rgba(180,140,196,0.15); color: #b48cc4; }
+
+.script-situation {
+  font-size: 0.88rem;
+  color: var(--text);
+  font-weight: 400;
+}
+
+.script-chevron {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  transition: transform 0.25s;
+  flex-shrink: 0;
+}
+
+.script-item.open .script-chevron { transform: rotate(180deg); }
+
+.script-body {
+  display: none;
+  padding: 0 20px 20px;
+  border-top: 1px solid var(--border);
+}
+
+.script-item.open .script-body { display: block; }
+
+.script-context {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  padding: 12px 0 16px;
+  font-style: italic;
+}
+
+.phrase-block {
+  background: var(--surface2);
+  border-left: 3px solid var(--accent);
+  padding: 16px 20px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.phrase-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.phrase-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.phrase-alt {
+  border-left-color: var(--accent2);
+  margin-top: 10px;
+}
+
+.phrase-alt .phrase-label { color: var(--accent2); }
+
+.copy-btn {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 4px 10px;
+  font-size: 0.65rem;
+  cursor: pointer;
+  font-family: 'Epilogue', sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.15s;
+}
+
+.copy-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+.copy-btn.copied { background: var(--accent2); color: white; border-color: var(--accent2); }
+
+.phrase-decode {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: rgba(138,180,196,0.05);
+  border: 1px solid rgba(138,180,196,0.12);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  display: flex;
+  gap: 8px;
+}
+
+.phrase-decode::before { content: '🔍'; flex-shrink: 0; }
+
+/* OUTILS TSA */
+.tools-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 580px) { .tools-grid { grid-template-columns: 1fr; } }
+
+.tool-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 26px 24px;
+  transition: border-color 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+
+.tool-card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+
+.tool-card.expanded {
+  grid-column: 1 / -1;
+  border-color: var(--tsa);
+}
+
+.tool-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.tool-icon { font-size: 1.6rem; margin-bottom: 10px; display: block; }
+
+.tool-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.tool-desc { font-size: 0.83rem; color: var(--text-muted); line-height: 1.6; }
+
+.tool-expand-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 4px 10px;
+  font-size: 0.65rem;
+  cursor: pointer;
+  font-family: 'Epilogue', sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tool-expand-btn:hover { border-color: var(--tsa); color: var(--tsa); }
+
+.tool-detail { display: none; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px; }
+.tool-card.expanded .tool-detail { display: block; }
+
+.tool-steps { list-style: none; padding: 0; counter-reset: step; }
+
+.tool-steps li {
+  counter-increment: step;
+  padding: 10px 0 10px 36px;
+  position: relative;
+  font-size: 0.87rem;
+  color: var(--text-soft);
+  border-bottom: 1px solid var(--border);
+}
+
+.tool-steps li:last-child { border-bottom: none; }
+
+.tool-steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 22px; height: 22px;
+  background: var(--tsa);
+  color: var(--bg);
+  font-size: 0.7rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-family: 'Epilogue', sans-serif;
+}
+
+.tool-note {
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: rgba(138,180,196,0.06);
+  border-left: 2px solid var(--tsa);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* LIGNE ROUGE */
+.lr-container {
+  background: rgba(192,90,90,0.04);
+  border: 1px solid rgba(192,90,90,0.2);
+  padding: 32px 36px;
+  margin-bottom: 14px;
+}
+
+.lr-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--danger);
+  margin-bottom: 8px;
+}
+
+.lr-subtitle {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+.lr-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 580px) { .lr-grid { grid-template-columns: 1fr; } }
+
+.lr-col h4 {
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.lr-col.accept h4 { color: var(--accent2); }
+.lr-col.refuse h4 { color: var(--danger); }
+
+.lr-col ul { list-style: none; padding: 0; }
+
+.lr-col ul li {
+  font-size: 0.86rem;
+  padding: 7px 0 7px 20px;
+  position: relative;
+  color: var(--text-soft);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.lr-col ul li:last-child { border-bottom: none; }
+.lr-col.accept li::before { content: '✓'; position: absolute; left: 0; color: var(--accent2); }
+.lr-col.refuse li::before { content: '✕'; position: absolute; left: 0; color: var(--danger); }
+
+/* SIGNAL D'ALARME */
+.alarm-strip {
+  background: rgba(196,165,58,0.06);
+  border: 1px solid rgba(196,165,58,0.2);
+  border-left: 3px solid var(--gold);
+  padding: 20px 24px;
+  margin-bottom: 60px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.alarm-strip h4 {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.alarm-strip ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+
+.alarm-strip ul li {
+  font-size: 0.82rem;
+  color: var(--text-soft);
+  background: rgba(196,165,58,0.08);
+  padding: 4px 10px;
+  border: 1px solid rgba(196,165,58,0.15);
+}
+
+/* REGULATION */
+.reg-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 640px) { .reg-grid { grid-template-columns: 1fr; } }
+
+.reg-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 22px 20px;
+  text-align: center;
+}
+
+.reg-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: rgba(138,180,196,0.25);
+  -webkit-text-stroke: 1px var(--tsa);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.reg-name {
+  font-size: 0.82rem;
+  color: var(--text);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.reg-detail {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+/* MANTRA */
+.mantra {
+  margin-top: 80px;
+  padding: 40px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+
+.mantra p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  font-style: italic;
+  color: var(--text-soft);
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.mantra strong { color: var(--accent); font-style: normal; }
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding-top: 40px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--accent2);
+  color: white;
+  padding: 10px 20px;
+  font-size: 0.8rem;
+  opacity: 0;
+  transition: all 0.3s;
+  pointer-events: none;
+  z-index: 999;
+  font-family: 'Epilogue', sans-serif;
+}
+
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* PROGRESS BAR */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: var(--accent);
+  width: 0%;
+  z-index: 200;
+  transition: width 0.1s;
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+<div class="toast" id="toast">Phrase copiée ✓</div>
+
+<nav class="nav-pill" id="navPill">
+  <button class="nav-dot" data-label="Intro" data-target="s0" onclick="scrollTo('s0')"></button>
+  <button class="nav-dot" data-label="Profils" data-target="s1" onclick="scrollTo('s1')"></button>
+  <button class="nav-dot" data-label="Scripts" data-target="s2" onclick="scrollTo('s2')"></button>
+  <button class="nav-dot" data-label="Outils TSA" data-target="s3" onclick="scrollTo('s3')"></button>
+  <button class="nav-dot" data-label="Ligne rouge" data-target="s4" onclick="scrollTo('s4')"></button>
+  <button class="nav-dot" data-label="Régulation" data-target="s5" onclick="scrollTo('s5')"></button>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <header class="hero" id="s0">
+    <p class="hero-eyebrow">DRH Externalisée — Guide terrain v2</p>
+    <h1>Gérer les <em>personnalités difficiles</em><br>avec clarté et intégrité</h1>
+    <p class="hero-sub">Scripts testés, outils pratiques et stratégies adaptées — pensés pour un profil empathique avec TSA qui travaille dans des environnements relationnels complexes.</p>
+  </header>
+
+  <!-- TSA BANNER -->
+  <div class="tsa-banner">
+    <span class="tsa-icon">🧭</span>
+    <div>
+      <h3>Note TSA intégrée dans ce guide</h3>
+      <p>Les personnalités difficiles sont particulièrement coûteuses sur le plan sensoriel et cognitif pour les profils TSA : imprévisibilité, communication implicite, charge émotionnelle non verbalisée. Ce guide est conçu pour réduire l'ambiguïté, donner des phrases exactes à utiliser, et outiller la régulation après les interactions difficiles. Les sections marquées <span style="color:var(--tsa)">🔵</span> contiennent des adaptations spécifiques.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 1 : PROFILS -->
+  <section class="section" id="s1">
+    <div class="section-header">
+      <span class="s-num">01 —</span>
+      <span class="s-title">Identifier et comprendre le profil</span>
+    </div>
+    <p class="s-desc">Chaque profil a sa logique interne. La comprendre ne justifie rien — mais permet de choisir la bonne stratégie plutôt que de réagir à l'affect.</p>
+
+    <div class="profile-tabs" id="profileTabs">
+      <button class="ptab active" onclick="showProfile('directif')">🔥 Directif Brutal</button>
+      <button class="ptab" onclick="showProfile('fondateur')">🌪 Fondateur Tout-Puissant</button>
+      <button class="ptab" onclick="showProfile('manipulateur')">🎭 Manipulateur Flatteur</button>
+      <button class="ptab" onclick="showProfile('passif')">🧊 Passif-Agressif</button>
+      <button class="ptab" onclick="showProfile('perfectionniste')">🔬 Perfectionniste Toxique</button>
+    </div>
+
+    <!-- DIRECTIF -->
+    <div class="profile-panel active" id="panel-directif">
+      <div class="profile-grid">
+        <div class="pblock">
+          <div class="pblock-title">Ce qu'on observe</div>
+          <ul>
+            <li>Ton sec, coupant, parfois humiliant en public</li>
+            <li>Interruptions constantes, peu d'écoute</li>
+            <li>Critique frontale sans nuance</li>
+            <li>Jamais de reconnaissance, rarement de merci</li>
+            <li>Décisions rapides sans consultation</li>
+          </ul>
+        </div>
+        <div class="pblock">
+          <div class="pblock-title">Ce qui se passe vraiment</div>
+          <ul>
+            <li>Stress chronique mal régulé → sortit en brutalité</li>
+            <li>Souvent confiance en soi fragile derrière l'armure</li>
+            <li>Ne voit pas toujours l'impact de son comportement</li>
+            <li>A été formé dans des environnements similaires</li>
+          </ul>
+        </div>
+        <div class="pblock good">
+          <div class="pblock-title">Ce qui marche</div>
+          <ul>
+            <li>Présenter faits et chiffres, sans affect</li>
+            <li>Tenir debout sans contre-attaquer</li>
+            <li>Recadrer à froid (jamais dans l'instant)</li>
+            <li>Être direct, bref, competent</li>
+            <li>Anticiper ses besoins avant qu'il les exprime</li>
+          </ul>
+        </div>
+        <div class="pblock danger">
+          <div class="pblock-title">Ce qui aggrave</div>
+          <ul>
+            <li>Plier sans rien dire (renforce le pattern)</li>
+            <li>Répondre sur le même ton agressif</li>
+            <li>Justifier émotionnellement</li>
+            <li>Paraître incertain ou hésitant</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tsa-note">
+        <span class="tsa-note-icon">🔵</span>
+        <span>Ce profil est particulièrement coûteux : l'imprévisibilité du ton, les interruptions et la charge émotionnelle non verbalisée sollicitent massivement les fonctions exécutives. Stratégie TSA : préparer mentalement 2-3 phrases de recadrage avant chaque réunion avec lui, pour éviter le freeze. Voir Section 3 pour les scripts exacts.</span>
+      </div>
+    </div>
+
+    <!-- FONDATEUR -->
+    <div class="profile-panel" id="panel-fondateur">
+      <div class="profile-grid">
+        <div class="pblock">
+          <div class="pblock-title">Ce qu'on observe</div>
+          <ul>
+            <li>Ignore les process qu'il a lui-même validés</li>
+            <li>Sentiment d'exception : les règles sont pour les autres</li>
+            <li>Décisions impulsives, souvent la nuit ou en déplacement</li>
+            <li>Réagit très mal à toute limite posée</li>
+            <li>Prend les conseils comme des attaques</li>
+          </ul>
+        </div>
+        <div class="pblock">
+          <div class="pblock-title">Ce qui se passe vraiment</div>
+          <ul>
+            <li>A construit l'entreprise seul·e : tout lui appartient psychologiquement</li>
+            <li>Peur de perdre le contrôle derrière l'omnipotence</li>
+            <li>Confond son identité et son entreprise</li>
+            <li>Souvent isolé·e en haut, peu de feedback honnête</li>
+          </ul>
+        </div>
+        <div class="pblock good">
+          <div class="pblock-title">Ce qui marche</div>
+          <ul>
+            <li>Ancrer dans les risques POUR LUI (pas pour les autres)</li>
+            <li>Proposer, jamais interdire</li>
+            <li>Se positionner comme protecteur de ses intérêts</li>
+            <li>Briefer en amont — il déteste les surprises</li>
+            <li>Valoriser la vision, recadrer les moyens</li>
+          </ul>
+        </div>
+        <div class="pblock danger">
+          <div class="pblock-title">Ce qui aggrave</div>
+          <ul>
+            <li>"Vous n'avez pas le droit de…"</li>
+            <li>Les rappels à l'ordre frontaux devant témoins</li>
+            <li>Se positionner comme obstacle</li>
+            <li>Citer le Code du travail comme une menace</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tsa-note">
+        <span class="tsa-note-icon">🔵</span>
+        <span>Ce profil change d'avis fréquemment. Pour les profils TSA, cette imprévisibilité est épuisante. Stratégie : systématiser les comptes-rendus écrits après chaque décision ("je récapitule ce qu'on a acté"). Ça vous protège et ça lui donne un fil directeur qu'il n'a souvent pas.</span>
+      </div>
+    </div>
+
+    <!-- MANIPULATEUR -->
+    <div class="profile-panel" id="panel-manipulateur">
+      <div class="profile-grid">
+        <div class="pblock">
+          <div class="pblock-title">Ce qu'on observe</div>
+          <ul>
+            <li>Très chaleureux au départ — trop</li>
+            <li>Réutilise ce que vous partagez contre vous plus tard</li>
+            <li>Crée des dépendances : "vous êtes la seule qui me comprenez"</li>
+            <li>Retournement brutal si contrarié</li>
+            <li>Triangulation : parle de vous aux autres</li>
+          </ul>
+        </div>
+        <div class="pblock">
+          <div class="pblock-title">Ce qui se passe vraiment</div>
+          <ul>
+            <li>Besoin de contrôle relationnel fort</li>
+            <li>Souvent personnalité narcissique ou limite</li>
+            <li>La chaleur est un outil, pas un état</li>
+            <li>Teste en permanence la loyauté</li>
+          </ul>
+        </div>
+        <div class="pblock good">
+          <div class="pblock-title">Ce qui marche</div>
+          <ul>
+            <li>Tout tracer par écrit, sans exception</li>
+            <li>Rester en mode professionnel étanche</li>
+            <li>Ne jamais se confier personnellement</li>
+            <li>Validation systématique par écrit après échange</li>
+          </ul>
+        </div>
+        <div class="pblock danger">
+          <div class="pblock-title">Signaux d'alarme</div>
+          <ul>
+            <li>Vous sentez que vous devez "mériter" votre place</li>
+            <li>Vous marchez sur des œufs</li>
+            <li>Vous vous surprenez à sur-expliquer vos choix</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tsa-note">
+        <span class="tsa-note-icon">🔵</span>
+        <span>Ce profil est le plus épuisant pour les TSA : les signaux sont implicites, les règles changent sans prévenir, et la chaleur initiale peut être interprétée de façon littérale. Règle de protection : si une interaction vous laisse confuse sur ce qui vient de se passer, notez-le. Ce sentiment est un signal, pas de la paranoïa.</span>
+      </div>
+    </div>
+
+    <!-- PASSIF-AGRESSIF -->
+    <div class="profile-panel" id="panel-passif">
+      <div class="profile-grid">
+        <div class="pblock">
+          <div class="pblock-title">Ce qu'on observe</div>
+          <ul>
+            <li>Valide en réunion, bloque en coulisses</li>
+            <li>"Oublie" les engagements pris</li>
+            <li>Soupirs, silences chargés, sous-entendus</li>
+            <li>Ne dit jamais non en face</li>
+            <li>Retarde sans jamais expliquer pourquoi</li>
+          </ul>
+        </div>
+        <div class="pblock">
+          <div class="pblock-title">Ce qui se passe vraiment</div>
+          <ul>
+            <li>Incapacité à gérer le conflit direct</li>
+            <li>Peur des conséquences d'un refus franc</li>
+            <li>Ressentiment non verbalisé qui sort autrement</li>
+            <li>Souvent formé dans des environnements très hiérarchiques</li>
+          </ul>
+        </div>
+        <div class="pblock good">
+          <div class="pblock-title">Ce qui marche</div>
+          <ul>
+            <li>Questions fermées (oui/non), jamais ouvertes</li>
+            <li>Tout mettre par écrit immédiatement après</li>
+            <li>Créer des deadlines explicites et visibles</li>
+            <li>Nommer le comportement factuellement</li>
+          </ul>
+        </div>
+        <div class="pblock danger">
+          <div class="pblock-title">Ce qui aggrave</div>
+          <ul>
+            <li>Attendre un retour spontané</li>
+            <li>Prendre les silences pour un accord</li>
+            <li>Laisser l'ambiguïté s'installer</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tsa-note">
+        <span class="tsa-note-icon">🔵</span>
+        <span>Ce profil est particulièrement difficile pour les TSA qui lisent souvent les choses de façon littérale : quand il dit "oui" en réunion, vous le croyez. Stratégie : ignorer le verbal, ne retenir que l'écrit. Systématiser la phrase "je t'envoie un récap, dis-moi si j'ai mal compris".</span>
+      </div>
+    </div>
+
+    <!-- PERFECTIONNISTE TOXIQUE -->
+    <div class="profile-panel" id="panel-perfectionniste">
+      <div class="profile-grid">
+        <div class="pblock">
+          <div class="pblock-title">Ce qu'on observe</div>
+          <ul>
+            <li>Critique tout, ne valide jamais vraiment</li>
+            <li>Les critères changent sans prévenir</li>
+            <li>Délais impossibles + exigences impossibles</li>
+            <li>Reprend le travail des autres sans expliquer pourquoi</li>
+            <li>Impossible à satisfaire durablement</li>
+          </ul>
+        </div>
+        <div class="pblock">
+          <div class="pblock-title">Ce qui se passe vraiment</div>
+          <ul>
+            <li>Angoisse du contrôle : déléguer = vulnérable</li>
+            <li>Peur de l'échec projeté sur les livrables</li>
+            <li>Standard irréaliste intériorisé depuis l'enfance</li>
+          </ul>
+        </div>
+        <div class="pblock good">
+          <div class="pblock-title">Ce qui marche</div>
+          <ul>
+            <li>Clarifier les critères de succès EN AMONT par écrit</li>
+            <li>Valider les étapes intermédiaires, pas seulement le final</li>
+            <li>Reformuler les feedbacks pour identifier ce qui est actionnable</li>
+            <li>Distinguer les demandes légitimes des dérapages</li>
+          </ul>
+        </div>
+        <div class="pblock danger">
+          <div class="pblock-title">Ce qui aggrave</div>
+          <ul>
+            <li>Livrer sans validation intermédiaire</li>
+            <li>Ne pas documenter les changements de cap</li>
+            <li>Laisser les critères implicites</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tsa-note">
+        <span class="tsa-note-icon">🔵</span>
+        <span>Ce profil peut déclencher de l'imposture intense pour les TSA : la règle du jeu change, on ne sait plus ce qui est bien ou mal. Ancre : votre grille de critères écrite EN DÉBUT DE MISSION. Elle ne change pas. Si les demandes dépassent ce cadre, c'est nommé comme tel.</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- SECTION 2 : SCRIPTS -->
+  <section class="section" id="s2">
+    <div class="section-header">
+      <span class="s-num">02 —</span>
+      <span class="s-title">Scripts et phrases à utiliser</span>
+    </div>
+    <p class="s-desc">Des formulations exactes, testées. Chaque phrase est donnée avec son alternative et son décodage. Cliquer pour ouvrir. Bouton copier disponible.</p>
+
+    <div class="scripts-filters">
+      <button class="filter-btn active" onclick="filterScripts('all', this)">Tous</button>
+      <button class="filter-btn" onclick="filterScripts('cadrage', this)">Cadrage</button>
+      <button class="filter-btn" onclick="filterScripts('recadrage', this)">Recadrage</button>
+      <button class="filter-btn" onclick="filterScripts('juridique', this)">Juridique</button>
+      <button class="filter-btn" onclick="filterScripts('ecrit', this)">Par écrit</button>
+      <button class="filter-btn" onclick="filterScripts('cloture', this)">Clôture</button>
+    </div>
+
+    <!-- CADRAGE -->
+    <div class="script-item" data-tag="cadrage">
+      <div class="script-top" onclick="toggleScript(this)">
+        <div class="script-top-left">
+          <span class="script-tag tag-cadrage">Cadrage</span>
+          <span class="script-situation">Poser le cadre relationnel dès le démarrage</span>
+        </div>
+        <span class="script-chevron">▼</span>
+      </div>
+      <div class="script-body">
+        <p class="script-context">À dire lors du premier échange formel, en phase de contractualisation ou de brief. Idéalement debout, calme, en regardant dans les yeux.</p>
+        <div class="phrase-block">
+          <div class="phrase-label">Phrase principale</div>
+          <div class="phrase-text">"Pour que cette mission soit vraiment utile pour vous, j'ai besoin qu'on puisse se parler franchement — dans les deux sens. Si quelque chose ne va pas de mon côté, je vous le dirai directement. J'attends la même chose de votre part."</div>
+          <button class="copy-btn" onclick="copyPhrase(this, 'Pour que cette mission soit vraiment utile pour vous, j\'ai besoin qu\'on puisse se parler franchement — dans les deux sens. Si quelque chose ne va pas de mon côté, je vous le dirai directement. J\'attends la même chose de votre part.')">Copier</button>
+        </div>
+        <div class="phrase-block phrase-alt">
+          <div class="phrase-label">Variante plus douce</div>
+          <div class="phrase-text">"Je fonctionne mieux quand le cadre est clair entre nous. Ce que j'attends de cette collaboration, c'est une communication directe des deux côtés — ça protège tout le monde."</div>
+          <button class="copy-btn" onclick="copyPhrase(this, 'Je fonctionne mieux quand le cadre est clair entre nous. Ce que j\'attends de cette collaboration, c\'est une communication directe des deux côtés — ça protège tout le monde.')">Copier</button>
+        </div>
+        <div class="phrase-decode">Vous posez le cadre sans demander permission. Vous ancrez dans l'efficacité, pas dans vos besoins personnels. Ce qui est dit tôt devient un standard.</div>
+      </div>
+    </div>
+
+    <div class="script-item" data-tag="cadrage">
+      <div class="script-top" onclick="toggleScript(this)">
+        <div class="script-top-left">
+          <span class="script-tag tag-cadrage">Cadrage</span>
+          <span class="script-situation">Clarifier les critères de succès en début de mission</span>
+        </div>
+        <span class="script-chevron">▼</span>
+      </div>
+      <div class="script-body">
+        <p class="script-context">Essentiel avec les profils perfectionnistes ou impulsifs. À faire valider par écrit.</p>
+        <div class="phrase-block">
+          <div class="phrase-label">Phrase principale</div>
+          <div class="phrase-text">"Avant de démarrer, je voudrais qu'on aligne ensemble ce à quoi ressemble une mission réussie dans 6 mois. Concrètement, quels sont les 3 résultats qui feraient que vous diriez 'ça a vraiment marché' ?"</div>
+          <button class="copy-btn" onclick="copyPhrase(this, 'Avant de démarrer, je voudrais qu\'on aligne ensemble ce à quoi ressemble une mission réussie dans 6 mois. Concrètement, quels sont les 3 résultats qui feraient que vous diriez ça a vraiment marché ?')">Copier</button>
+        </div>
+        <div class="phrase-decode">Force l'explicitation. Protège contre les critères changeants. Vous donne une base de référence opposable si les demandes dérivent.</div>
+      </div>
+    </div>
+
+    <!-- RECADRAGE -->
+    <div class="script-item" data-tag="recadrage">
+      <div class="script-top" onclick="toggleScript(this)">
+        <div class="script-top-left">
+          <span class="script-tag tag-recadrage">Recadrage</span>
+          <span class="script-situation">Après un incident de ton ou une parole blessante</span>
+        </div>
+        <span class="script-chevron">▼</span>
+      </div>
+      <div class="script-body">
+        <p class="script-context">À utiliser 24-48h après l'incident, en tête-à-tête, jamais par mail. Voix calme, sans accusation.</p>
+        <div class="phrase-block">
+          <div class="phrase-label">Phrase principale</div>
+          <div class="phrase-text">"Je voulais revenir sur notre échange d'hier. Le ton utilisé m'a mise en difficulté pour avancer sereinement sur votre dossier. Je pense qu'on peut travailler autrement — et ce sera plus efficace pour vous aussi."</div>
+          <button class="copy-btn" onclick="copyPhrase(this, 'Je voulais revenir sur notre échange d\'hier. Le ton utilisé m\'a mise en difficulté pour avancer sereinement sur votre dossier. Je pense qu\'on peut travailler autrement — et ce sera plus efficace pour vous aussi.')">Copier</button>
+        </div>
+        <div class="phrase-block phrase-alt">
+          <div class="phrase-label">Si c'est la première fois</div>
+          <div class="phrase-text">"Je vous dis ça parce que je veux que cette mission marche. Quand les échanges sont tendus, ça me prend de l'énergie que je préfère mettre sur vos sujets."</div>
+          <button class="copy-btn" onclick="copyPhrase(this, 'Je vous dis ça parce que je veux que cette mission marche. Quand les échanges sont tendus, ça me prend de l\'énergie que je préfère mettre sur vos sujets.')">Copier</button>
+        </div>
+        <div class="phrase-decode">Vous ne nommez pas la personne, vous nommez le comportement et son impact sur VOTRE EFFICACITÉ. Vous ancrez dans l'intérêt de la mission, pas dans votre ressenti personnel — ce qui est plus recevable pour un profil difficile.</div>
+      </div>
+    </div>
+
+    <div class="script-item" data-tag="recadrage">
+      <div class="script-top" onclick="toggleScript(this)">
+        <div class="script-top-left">
+          <span class="script-tag tag-recadrage">Recadrage</span>
+          <span class="script-situation">Face à une interruption répétée en réunion</span>
+        </div>
+        <span class="script-chevron">▼</span>
+      </div>
+      <div class="script-body">
+        <p class="script-context">À utiliser dans l'instant, avec calme. Pas d'escalade, pas de capitulation.</p>
+        <div class="phrase-block">
+          <div class="phrase-label">Dans l'instant (doux)</div>
+          <div class="phrase-text">"Laissez-moi finir ma phrase — j'arrive à votre question dans 30 secondes."</div>
+          <button class="copy-btn" onclick="copyPhrase(this, 'Laissez-moi finir ma phrase — j\'arrive à votre question dans 30 secondes.')">Copier</button>
+        </div>
+        <div class="phrase-block phrase-alt">
+          <div class="phrase-label">Si ça continue (ferme)</div>
+          <div class="phrase-text">"Je vais vous demander de me laisser terminer — vous aurez toutes les réponses à la fin."</div>
+          <button class="copy-btn" onclick="copyPhrase(this, 'Je vais vous demander de me laisser terminer — vous aurez toutes les réponses à la fin.')">Copier</button>
+        </div>
+        <div class="phrase-decode">Court, calme, non-négociable. L'erreur classique est de s'arrêter et de laisser la parole — ce qui valide l'interruption comme comportement acceptable.</div>
+      </div>
+    </div>
+
+    <div class="script-item" data-tag="recadrage">
+      <div class="script-top" onclick="toggleScript(this)">
+        <div class="script-top-left">
+          <span class="script-tag tag-recadrage">Recadrage</span>
+          <span class="script-situation">Face à une critique publique humiliante</span>
+        </div>
+        <span class="script-chevron">▼</span>
+      </div>
+      <div class="script-body">
+        <p class="script-context">Ne pas répondre à chaud devant le groupe. Deux options selon le niveau.</p>
+        <div class="phrase-block">
+          <div class="phrase-label">Réponse dans l'instant (neutralise)</div>
+          <div class="phrase-text">"Je prends note. On en reparlera en tête-à-tête."</div>
+          <button class="copy-btn" onclick="copyPhrase(this, 'Je prends note. On en reparlera en tête-à-tête.')">Copier</button>
+        </div>
+        <div class="phrase-block phrase-alt">
+          <div class="phrase-label">En tête-à-tête ensuite (ferme)</div>
+          <div class="phrase-text">"Ce qui s'est passé en réunion tout à l'heure n'est pas acceptable pour moi. Je vous demande de ne pas renouveler ce type d'échange en public. On peut se parler franchement, mais pas devant l'équipe."</div>
+          <button class="copy-btn" onclick="copyPhrase(this, 'Ce qui s\'est passé en réunion tout à l\'heure n\'est pas acceptable pour moi. Je vous demande de ne pas renouveler ce type d\'échange en public. On peut se parler franchement, mais pas devant l\'équipe.')">Copier</button>
+        </div>
+        <div class="phrase-decode">La première phrase coupe court sans créer de scène. La deuxième est la ligne rouge nommée clairement, en privé. L'ordre compte : d'abord sortir du public, ensuite nommer.</div>
+      </div>
+    </div>
+
+    <!-- JURIDIQUE -->
+    <div class="script-item" data-tag="juridique">
+      <div class="script-top" onclick="toggleScript(this)">
+        <div class="script-top-left">
+          <span class="script-tag tag-juridique">Juridique</span>
+          <span class="script-situation">Décision risquée imposée sans consultation</span>
+        </div>
+        <span class="script-chevron">▼</span>
+      </div>
+      <div class="script-body">
+        <p class="script-context">Ne jamais arriver avec "vous ne pouvez pas faire ça". Arriver avec une alternative.</p>
+        <div class="phrase-block">
+          <div class="phrase-label">Phrase principale</div>
+          <div class="phrase-text">"Je comprends ce que vous cherchez à faire, et je veux vous aider à y arriver. Sur ce point précis, il y a un risque réel pour vous — voici ce que ça peut coûter concrètement. Voilà comment on peut atteindre le même objectif autrement."</div>
+          <button class="copy-btn" onclick="copyPhrase(this, 'Je comprends ce que vous cherchez à faire, et je veux vous aider à y arriver. Sur ce point précis, il y a un risque réel pour vous — voici ce que ça peut coûter concrètement. Voilà comment on peut atteindre le même objectif autrement.')">Copier</button>
+        </div>
+        <div class="phrase-block phrase-alt">
+          <div class="phrase-label">Si insistance</div>
+          <div class="phrase-text">"C'est votre décision finale et je la respecte. Mon rôle est de vous avoir informé du risque. Je vous envoie un mail récapitulatif pour que ce soit tracé."</div>
+          <button class="copy-btn" onclick="copyPhrase(this, 'C\'est votre décision finale et je la respecte. Mon rôle est de vous avoir informé du risque. Je vous envoie un mail récapitulatif pour que ce soit tracé.')">Copier</button>
+        </div>
+        <div class="phrase-decode">Vous n'êtes pas l'obstacle — vous protégez leurs intérêts. La deuxième phrase vous protège vous : vous avez informé, c'est acté. Vous n'êtes pas co-responsable d'une décision qu'on vous a imposée.</div>
+      </div>
+    </div>
+
+    <div class="script-item" data-tag="juridique">
+      <div class="script-top" onclick="toggleScript(this)">
+        <div class="script-top-left">
+          <span class="script-tag tag-juridique">Juridique</span>
+          <span class="script-situation">Pression pour couvrir une pratique illégale</span>
+        </div>
+        <span class="script-chevron">▼</span>
+      </div>
+      <div class="script-body">
+        <p class="script-context">Situation de ligne rouge. Le ton doit rester calme mais la position, non-négociable.</p>
+        <div class="phrase-block">
+          <div class="phrase-label">Phrase principale</div>
+          <div class="phrase-text">"Je ne peux pas faire ça. Ce n'est pas une question de volonté — c'est une question de responsabilité professionnelle et personnelle. Je reste disponible pour trouver une solution dans le cadre légal."</div>
+          <button class="copy-btn" onclick="copyPhrase(this, 'Je ne peux pas faire ça. Ce n\'est pas une question de volonté — c\'est une question de responsabilité professionnelle et personnelle. Je reste disponible pour trouver une solution dans le cadre légal.')">Copier</button>
+        </div>
+        <div class="phrase-decode">Court, clair, ancré dans la responsabilité (pas dans la morale). Vous ne jugez pas — vous posez une limite structurelle. La porte reste ouverte pour une alternative, ce qui n'est pas un recul.</div>
+      </div>
+    </div>
+
+    <!-- PAR ÉCRIT -->
+    <div class="script-item" data-tag="ecrit">
+      <div class="script-top" onclick="toggleScript(this)">
+        <div class="script-top-left">
+          <span class="script-tag tag-ecrit">Par écrit</span>
+          <span class="script-situation">Récapitulatif après réunion (passif-agressif / fondateur)</span>
+        </div>
+        <span class="script-chevron">▼</span>
+      </div>
+      <div class="script-body">
+        <p class="script-context">Mail à envoyer dans les 2h après la réunion. Systématique.</p>
+        <div class="phrase-block">
+          <div class="phrase-label">Objet mail</div>
+          <div class="phrase-text">"Récap — Réunion du [date] / [sujet]"</div>
+          <button class="copy-btn" onclick="copyPhrase(this, 'Récap — Réunion du [date] / [sujet]')">Copier</button>
+        </div>
+        <div class="phrase-block phrase-alt">
+          <div class="phrase-label">Corps du mail</div>
+          <div class="phrase-text">"Suite à notre échange, voici ce que j'ai retenu : [décision 1] / [décision 2] / [point en attente : responsable + deadline]. Si j'ai mal compris quelque chose, dites-le moi avant [date] — sinon je pars sur cette base."</div>
+          <button class="copy-btn" onclick="copyPhrase(this, 'Suite à notre échange, voici ce que j\'ai retenu : [décision 1] / [décision 2] / [point en attente : responsable + deadline]. Si j\'ai mal compris quelque chose, dites-le moi avant [date] — sinon je pars sur cette base.')">Copier</button>
+        </div>
+        <div class="phrase-decode">Le silence devient un accord tacite documenté. Vous protégez la mission ET vous réduisez votre charge cognitive : plus besoin de mémoriser ce qui a été dit.</div>
+      </div>
+    </div>
+
+    <div class="script-item" data-tag="ecrit">
+      <div class="script-top" onclick="toggleScript(this)">
+        <div class="script-top-left">
+          <span class="script-tag tag-ecrit">Par écrit</span>
+          <span class="script-situation">Tracer un recadrage verbal dans un mail</span>
+        </div>
+        <span class="script-chevron">▼</span>
+      </div>
+      <div class="script-body">
+        <p class="script-context">Après avoir recadré à l'oral, pour avoir une trace sans être accusatoire.</p>
+        <div class="phrase-block">
+          <div class="phrase-label">Corps du mail</div>
+          <div class="phrase-text">"Suite à notre échange d'aujourd'hui, je voulais confirmer par écrit ce dont on a parlé : nous avons convenu de [X]. De mon côté, je m'engage à [Y]. Je vous remercie pour votre écoute."</div>
+          <button class="copy-btn" onclick="copyPhrase(this, 'Suite à notre échange d\'aujourd\'hui, je voulais confirmer par écrit ce dont on a parlé : nous avons convenu de [X]. De mon côté, je m\'engage à [Y]. Je vous remercie pour votre écoute.')">Copier</button>
+        </div>
+        <div class="phrase-decode">Neutre, factuel, sans accusation. Le ton est collaboratif. Vous avez une trace sans avoir "menacé" quoi que ce soit.</div>
+      </div>
+    </div>
+
+    <!-- CLÔTURE -->
+    <div class="script-item" data-tag="cloture">
+      <div class="script-top" onclick="toggleScript(this)">
+        <div class="script-top-left">
+          <span class="script-tag tag-cloture">Clôture</span>
+          <span class="script-situation">Mettre fin à une mission qui dépasse la ligne rouge</span>
+        </div>
+        <span class="script-chevron">▼</span>
+      </div>
+      <div class="script-body">
+        <p class="script-context">À utiliser quand la décision est prise. Brève, professionnelle, sans justification excessive.</p>
+        <div class="phrase-block">
+          <div class="phrase-label">Phrase principale</div>
+          <div class="phrase-text">"Après réflexion, je ne suis pas en mesure de poursuivre cette mission dans les conditions actuelles. Je reste disponible pour assurer une passation propre sur les sujets en cours."</div>
+          <button class="copy-btn" onclick="copyPhrase(this, 'Après réflexion, je ne suis pas en mesure de poursuivre cette mission dans les conditions actuelles. Je reste disponible pour assurer une passation propre sur les sujets en cours.')">Copier</button>
+        </div>
+        <div class="phrase-decode">Pas de justification longue — elle invite à la négociation ou à l'attaque. "Conditions actuelles" est suffisamment flou pour ne pas relancer le débat. La passation démontre votre professionnalisme.</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- SECTION 3 : OUTILS TSA -->
+  <section class="section" id="s3">
+    <div class="section-header">
+      <span class="s-num">03 —</span>
+      <span class="s-title">Outils adaptés TSA</span>
+    </div>
+    <p class="s-desc">Ces outils réduisent la charge cognitive et la surcharge sensorielle liées aux interactions avec des personnalités difficiles. Chacun est pensé pour être utilisable seul, avant ou après une interaction.</p>
+
+    <div class="tools-grid" id="toolsGrid">
+
+      <div class="tool-card" id="tool-brief" onclick="toggleTool('brief')">
+        <span class="tool-icon">📋</span>
+        <div class="tool-header">
+          <div>
+            <div class="tool-name">Brief pré-réunion</div>
+            <div class="tool-desc">Réduire l'imprévisibilité en préparant 3 scénarios avant chaque interaction à risque.</div>
+          </div>
+          <button class="tool-expand-btn">Voir →</button>
+        </div>
+        <div class="tool-detail">
+          <p style="font-size:0.85rem; color:var(--text-soft); margin-bottom:16px;">À faire seule, par écrit, 15 minutes avant la réunion. Réduit la charge cognitive en réunion.</p>
+          <ol class="tool-steps">
+            <li><strong>Quel est l'objectif de la réunion ?</strong> Une phrase max. Ce que vous voulez en sortir concrètement.</li>
+            <li><strong>Qu'est-ce que l'autre veut probablement ?</strong> Anticipez son agenda, même implicite.</li>
+            <li><strong>Scénario calme :</strong> ça se passe bien, notez votre phrase d'ouverture.</li>
+            <li><strong>Scénario tendu :</strong> il/elle s'énerve ou attaque. Quelle est votre phrase de sortie ?</li>
+            <li><strong>Scénario blocage :</strong> il/elle refuse de décider. Comment vous sortez proprement ?</li>
+          </ol>
+          <div class="tool-note">Le fait d'avoir réfléchi aux scénarios à l'avance libère de la bande passante pour écouter en réunion plutôt que de gérer l'anxiété en temps réel.</div>
+        </div>
+      </div>
+
+      <div class="tool-card" id="tool-debrief" onclick="toggleTool('debrief')">
+        <span class="tool-icon">🌡️</span>
+        <div class="tool-header">
+          <div>
+            <div class="tool-name">Débrief post-interaction</div>
+            <div class="tool-desc">Vider la charge cognitive et émotionnelle après une interaction difficile.</div>
+          </div>
+          <button class="tool-expand-btn">Voir →</button>
+        </div>
+        <div class="tool-detail">
+          <p style="font-size:0.85rem; color:var(--text-soft); margin-bottom:16px;">À faire dans l'heure qui suit. Écrit ou oral (dictaphone). 5-10 minutes max.</p>
+          <ol class="tool-steps">
+            <li><strong>Ce qui s'est passé factuellement</strong> (sans interprétation) : qui a dit quoi, dans quel ordre.</li>
+            <li><strong>Ce que j'ai ressenti dans le corps</strong> : tension, chaleur, freeze ? Nommer physiquement.</li>
+            <li><strong>Ce que j'ai pensé / interprété</strong> : distinguer les faits de l'interprétation.</li>
+            <li><strong>Ce que je ferai différemment</strong> : une action concrète max.</li>
+            <li><strong>Ce que j'ai bien géré</strong> : une chose, même petite. Obligatoire.</li>
+          </ol>
+          <div class="tool-note">L'étape 5 n'est pas optionnelle. Le biais d'autocritique TSA amplifie les erreurs et efface les réussites. Cette étape rééquilibre la mémoire de l'événement.</div>
+        </div>
+      </div>
+
+      <div class="tool-card" id="tool-signal" onclick="toggleTool('signal')">
+        <span class="tool-icon">🚦</span>
+        <div class="tool-header">
+          <div>
+            <div class="tool-name">Feu tricolore interne</div>
+            <div class="tool-desc">Identifier son état de surcharge AVANT d'être dépassée.</div>
+          </div>
+          <button class="tool-expand-btn">Voir →</button>
+        </div>
+        <div class="tool-detail">
+          <p style="font-size:0.85rem; color:var(--text-soft); margin-bottom:16px;">Un outil de régulation sensorielle à utiliser pendant ou juste avant une interaction à risque.</p>
+          <ol class="tool-steps">
+            <li><strong>🟢 Vert :</strong> Je suis en capacité. Écoute active, parole fluide, recul disponible. Je peux gérer.</li>
+            <li><strong>🟡 Jaune :</strong> Je commence à saturar. Signaux : voix qui monte, pensée qui s'accélère, envie de fuir ou de sur-expliquer. Action : pause active — je dis "laissez-moi une seconde" ou je note au lieu de parler.</li>
+            <li><strong>🔴 Rouge :</strong> Surcharge. Je ne suis plus dans l'état pour recadrer. Action : sortir proprement — "je reviens vers vous dans la journée" — et ne pas prendre de décision.</li>
+          </ol>
+          <div class="tool-note">Le passage de vert à rouge peut être très rapide avec les profils difficiles. La clé est de repérer le jaune, pas d'attendre le rouge.</div>
+        </div>
+      </div>
+
+      <div class="tool-card" id="tool-grille" onclick="toggleTool('grille')">
+        <span class="tool-icon">🗂️</span>
+        <div class="tool-header">
+          <div>
+            <div class="tool-name">Grille d'interprétation</div>
+            <div class="tool-desc">Démêler le fait, l'intention probable et ma réaction pour ne pas sur-interpréter.</div>
+          </div>
+          <button class="tool-expand-btn">Voir →</button>
+        </div>
+        <div class="tool-detail">
+          <p style="font-size:0.85rem; color:var(--text-soft); margin-bottom:16px;">Pour les situations ambiguës où vous ne savez pas comment interpréter un comportement ou une phrase.</p>
+          <ol class="tool-steps">
+            <li><strong>Fait brut :</strong> qu'est-ce qui s'est passé exactement ? (les mots exacts, pas l'interprétation)</li>
+            <li><strong>3 interprétations possibles :</strong> bienveillante / neutre / hostile. Les trois, même si la hostile semble évidente.</li>
+            <li><strong>Laquelle est la plus probable compte tenu du contexte ?</strong> Pas la plus douloureuse — la plus probable.</li>
+            <li><strong>Est-ce que ça change quelque chose à mon action ?</strong> Si non : lâcher. Si oui : nommer factuellement.</li>
+          </ol>
+          <div class="tool-note">Les profils TSA ont tendance à hyper-analyser les ambiguïtés, ce qui peut amplifier une menace qui n'est pas là. Cette grille force à tester l'hypothèse bienveillante avant de conclure.</div>
+        </div>
+      </div>
+
+      <div class="tool-card" id="tool-phrase" onclick="toggleTool('phrase')">
+        <span class="tool-icon">🔒</span>
+        <div class="tool-header">
+          <div>
+            <div class="tool-name">Phrases de sortie d'urgence</div>
+            <div class="tool-desc">3 phrases à mémoriser pour sortir d'une situation sans freeze ni escalade.</div>
+          </div>
+          <button class="tool-expand-btn">Voir →</button>
+        </div>
+        <div class="tool-detail">
+          <p style="font-size:0.85rem; color:var(--text-soft); margin-bottom:16px;">À mémoriser littéralement. Elles fonctionnent dans la plupart des situations de surcharge ou d'attaque verbale.</p>
+          <ol class="tool-steps">
+            <li><strong>"Laissez-moi une seconde."</strong> (gagne du temps, signale que vous êtes toujours là, coupe l'escalade)</li>
+            <li><strong>"Je vous reviens là-dessus dans la journée."</strong> (sortie propre sans claquement de porte, protège la relation)</li>
+            <li><strong>"Je prends note, on en reparle en tête-à-tête."</strong> (neutralise le public, diffère sans fuite)</li>
+          </ol>
+          <div class="tool-note">Ces trois phrases n'ont pas besoin d'être adaptées selon le contexte. Leur force vient de leur simplicité. En état de freeze, une phrase courte mémorisée vaut mieux qu'une formulation parfaite introuvable.</div>
+        </div>
+      </div>
+
+      <div class="tool-card" id="tool-ancre" onclick="toggleTool('ancre')">
+        <span class="tool-icon">⚓</span>
+        <div class="tool-header">
+          <div>
+            <div class="tool-name">Ancres d'identité professionnelle</div>
+            <div class="tool-desc">Contrer l'imposture en revenant à des preuves concrètes de compétence.</div>
+          </div>
+          <button class="tool-expand-btn">Voir →</button>
+        </div>
+        <div class="tool-detail">
+          <p style="font-size:0.85rem; color:var(--text-soft); margin-bottom:16px;">À construire une fois, à relire avant les interactions déstabilisantes.</p>
+          <ol class="tool-steps">
+            <li><strong>Listez 5 missions où vous avez eu un impact réel</strong> et mesurable. Pas des intentions — des faits.</li>
+            <li><strong>Notez 3 situations difficiles</strong> que vous avez navigué avec succès.</li>
+            <li><strong>Identifiez votre valeur distinctive</strong> : ce que vous faites que peu d'autres font aussi bien.</li>
+            <li><strong>Relisez cette liste avant chaque interaction à risque.</strong> 3 minutes suffisent.</li>
+          </ol>
+          <div class="tool-note">Les personnalités difficiles déstabilisent. Le syndrome de l'imposteur est amplifié par les profils critiques ou humiliants. Cette liste n'est pas de l'auto-congratulation — c'est de la réalité calibrée.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 4 : LIGNE ROUGE -->
+  <section class="section" id="s4">
+    <div class="section-header">
+      <span class="s-num">04 —</span>
+      <span class="s-title">Définir sa ligne rouge</span>
+    </div>
+    <p class="s-desc">À fixer par écrit avant de démarrer une mission. Une ligne rouge définie à l'avance est une décision — pas une réaction émotionnelle.</p>
+
+    <div class="lr-container">
+      <div class="lr-title">⚡ Ce qui se gère / ce qui ne se normalise pas</div>
+      <div class="lr-subtitle">Ce tableau est à personnaliser. Il ne s'agit pas d'un standard universel mais d'un cadre à ajuster selon votre situation et votre état.</div>
+      <div class="lr-grid">
+        <div class="lr-col accept">
+          <h4>J'accepte de gérer</h4>
+          <ul>
+            <li>Un ton sec en situation de stress ponctuel</li>
+            <li>Des décisions avec lesquelles je ne suis pas d'accord</li>
+            <li>Une communication directe, voire abrupte</li>
+            <li>Des délais courts imposés</li>
+            <li>Un manque de reconnaissance</li>
+            <li>Des changements de priorité fréquents</li>
+            <li>Un style de management très directif</li>
+          </ul>
+        </div>
+        <div class="lr-col refuse">
+          <h4>Je ne normalise pas</h4>
+          <ul>
+            <li>Les humiliations publiques répétées</li>
+            <li>Les mensonges sur les décisions prises</li>
+            <li>La pression pour couvrir des pratiques illégales</li>
+            <li>Les attaques personnelles (et non professionnelles)</li>
+            <li>L'isolement délibéré ou la manipulation</li>
+            <li>Les comportements qui affectent ma santé</li>
+            <li>L'impossibilité de faire mon travail correctement</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="alarm-strip">
+      <div>
+        <h4>⚠ Signaux que la ligne rouge est dépassée</h4>
+        <ul>
+          <li>Je dors mal avant les réunions</li>
+          <li>Je n'arrive plus à travailler sereinement</li>
+          <li>Je sur-explique ou m'excuse sans raison</li>
+          <li>Je redoute les appels ou messages</li>
+          <li>Je marche sur des œufs en permanence</li>
+          <li>Je me questionne sur ma valeur professionnelle</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5 : RÉGULATION -->
+  <section class="section" id="s5">
+    <div class="section-header">
+      <span class="s-num">05 —</span>
+      <span class="s-title">Régulation après l'interaction</span>
+    </div>
+    <p class="s-desc">Travailler avec des profils difficiles a un coût physiologique et cognitif réel. Ces techniques sont ordonnées : commencer par le corps avant le cognitif.</p>
+
+    <div class="reg-grid">
+      <div class="reg-card">
+        <span class="reg-num">1</span>
+        <div class="reg-name">Régulation physiologique d'abord</div>
+        <div class="reg-detail">Avant de "analyser" ce qui s'est passé, revenir dans le corps. Respiration 4-7-8, marche courte, froid sur les poignets. 5 minutes suffisent pour désactiver le système nerveux sympathique.</div>
+      </div>
+      <div class="reg-card">
+        <span class="reg-num">2</span>
+        <div class="reg-name">Nommer, pas ruminer</div>
+        <div class="reg-detail">Écrire en 3 phrases ce qui s'est passé. L'écriture externalise la charge cognitive. Elle transforme une rumination en un événement délimité, qui a un début et une fin.</div>
+      </div>
+      <div class="reg-card">
+        <span class="reg-num">3</span>
+        <div class="reg-name">Débriefer avec un pair</div>
+        <div class="reg-detail">Pas pour chercher validation, mais pour remettre à l'échelle. Un regard extérieur calibre ce qui était réel et ce qui était amplifié par la charge émotionnelle du moment.</div>
+      </div>
+      <div class="reg-card">
+        <span class="reg-num">4</span>
+        <div class="reg-name">Une action, pas un plan</div>
+        <div class="reg-detail">Après la régulation, identifier UNE seule chose à faire différemment la prochaine fois. Pas une liste. Une chose. Le reste attendra.</div>
+      </div>
+      <div class="reg-card">
+        <span class="reg-num">5</span>
+        <div class="reg-name">Recontacter ses ancres</div>
+        <div class="reg-detail">Relire la liste des réussites. Appeler quelqu'un qui vous connaît bien professionnellement. Reprendre un outil maîtrisé. Recalibrer l'identité professionnelle après une déstabilisation.</div>
+      </div>
+      <div class="reg-card">
+        <span class="reg-num">6</span>
+        <div class="reg-name">Évaluer la mission</div>
+        <div class="reg-detail">Régulièrement (pas dans le feu de l'action) : est-ce que cette mission me coûte plus qu'elle ne m'apporte ? La réponse peut changer au fil du temps. Réévaluer est légitime.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="mantra">
+    <p>L'objectif n'est pas de <strong>changer l'autre</strong>.<br>C'est de rester <strong>pleinement vous-même</strong> en travaillant avec lui —<br>et de savoir exactement <strong>jusqu'où vous êtes prête à aller.</strong></p>
+  </div>
+
+  <footer>
+    Guide terrain — DRH Externalisée &nbsp;·&nbsp; Usage professionnel personnel &nbsp;·&nbsp; v2
+  </footer>
+
+</div>
+
+<script>
+// PROGRESS BAR
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+
+  // NAV DOTS
+  const sections = ['s0','s1','s2','s3','s4','s5'];
+  const dots = document.querySelectorAll('.nav-dot');
+  sections.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= 200 && rect.bottom >= 200) {
+      dots.forEach(d => d.classList.remove('active'));
+      if (dots[i]) dots[i].classList.add('active');
+    }
+  });
+});
+
+// SCROLL TO
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// PROFILE TABS
+function showProfile(id) {
+  document.querySelectorAll('.profile-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+  const panel = document.getElementById('panel-' + id);
+  if (panel) panel.classList.add('active');
+  event.target.classList.add('active');
+}
+
+// SCRIPTS
+function toggleScript(el) {
+  const item = el.closest('.script-item');
+  item.classList.toggle('open');
+}
+
+function filterScripts(tag, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.script-item').forEach(item => {
+    if (tag === 'all' || item.dataset.tag === tag) {
+      item.classList.remove('hidden');
+    } else {
+      item.classList.add('hidden');
+      item.classList.remove('open');
+    }
+  });
+}
+
+// TOOLS
+function toggleTool(id) {
+  const card = document.getElementById('tool-' + id);
+  const isExpanded = card.classList.contains('expanded');
+  document.querySelectorAll('.tool-card').forEach(c => c.classList.remove('expanded'));
+  if (!isExpanded) card.classList.add('expanded');
+}
+
+// COPY
+function copyPhrase(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copié';
+    btn.classList.add('copied');
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => {
+      btn.textContent = 'Copier';
+      btn.classList.remove('copied');
+      toast.classList.remove('show');
+    }, 2000);
+  });
+}
+</script>
+</body>
+</html>
